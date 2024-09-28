@@ -40,6 +40,9 @@ namespace HotelBookingSystem
                 string employeeName = loginController.GetEmployeeName(staffNumber);
                 Console.WriteLine($"Login successful: {employeeName}");
 
+                staffNumberTextBox.Text = "";
+                passwordTextBox.Text = "";
+
                 // Pass employeeName to the new form
                 HomeForm homeForm = new HomeForm(employeeName);
                 this.Hide(); // Hide the current form
