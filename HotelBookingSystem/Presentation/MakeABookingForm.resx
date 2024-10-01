@@ -174,7 +174,7 @@
   <data name="homeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAFwAAABcCAYAAADj79JYAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EQAACxEBf2RfkQAAD9ZJREFUeF7tnQWM7NoRRF+YmZmZGRRmRoUThZmZSQGFOQoooDAonCjMP8zMzMzM
+        DAAACwwBP0AiyAAAD9ZJREFUeF7tnQWM7NoRRF+YmZmZGRRmRoUThZmZSQGFOQoooDAonCjMP8zMzMzM
         debt0e9c2R7P7szs/LcuqeQdw4Vyu92XvPt2CYcKD7NF/q6/Dx1OWCIQdR68ERN2CMU+YniT8CXhQeGH
         w1eH9whPE4rJ2ncAxb54+K3wvz38R/jk8PAhGPNETGigaJcMFfYz4YPD64QPD78d/muLHj9uCCZLXwD6
         4qOHfw+/H16ZHQGu5RnhL8K/hP8JvSHwC6GiTz59JLTuh4QfCHUVVw3/GFaBIT797uGFw4uFpwzBJPiC
@@ -245,4 +245,16 @@
         SUVORK5CYII=
 </value>
   </data>
+  <metadata name="roomBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>727, 17</value>
+  </metadata>
+  <metadata name="hotelDBDataSetBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>153, 17</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>36</value>
+  </metadata>
 </root>
