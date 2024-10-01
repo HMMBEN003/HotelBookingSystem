@@ -268,7 +268,7 @@ namespace HotelBookingSystem.Presentation
 
         private void Close_Form(object sender, FormClosingEventArgs e)
         {
-            if (!backButtonPressed) Application.Exit();
+            if (!backButtonPressed && this.Visible) Application.Exit();
         }
 
         private void backButton_Click(object sender, EventArgs e)
@@ -320,7 +320,7 @@ namespace HotelBookingSystem.Presentation
             }
 
             this.Hide(); // Hide the current form
-            FindCustomerForm findCustomerForm = new FindCustomerForm();
+            FindCustomerForm findCustomerForm = new FindCustomerForm(currentBooking);
             findCustomerForm.Show(); // Show the new FindCustomerForm
         }
     }

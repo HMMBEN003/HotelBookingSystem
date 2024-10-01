@@ -63,6 +63,7 @@
             this.backButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.backButton.TabIndex = 6;
             this.backButton.TabStop = false;
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
             // homeButton
             // 
@@ -74,6 +75,7 @@
             this.homeButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.homeButton.TabIndex = 8;
             this.homeButton.TabStop = false;
+            this.homeButton.Click += new System.EventHandler(this.homeButton_Click);
             // 
             // border
             // 
@@ -108,11 +110,12 @@
             this.emailTextBox.Size = new System.Drawing.Size(340, 43);
             this.emailTextBox.TabIndex = 11;
             this.emailTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.emailTextBox.TextChanged += new System.EventHandler(this.emailTextBox_TextChanged);
             // 
             // searchButton
             // 
             this.searchButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.searchButton.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.searchButton.BackColor = System.Drawing.Color.LightGray;
             this.searchButton.Font = new System.Drawing.Font("Malgun Gothic", 16.06154F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.searchButton.Location = new System.Drawing.Point(624, 436);
@@ -122,6 +125,7 @@
             this.searchButton.TabIndex = 12;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = false;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // FindCustomerForm
             // 

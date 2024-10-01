@@ -62,10 +62,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\Booking.cs" />
+    <Compile Include="Business\Guest.cs" />
+    <Compile Include="Business\GuestController.cs" />
     <Compile Include="Business\LoginController.cs" />
     <Compile Include="Business\Room.cs" />
     <Compile Include="Business\RoomController.cs" />
     <Compile Include="Data\DB.cs" />
+    <Compile Include="Data\GuestDB.cs" />
     <Compile Include="Data\LoginDB.cs" />
     <Compile Include="Data\RoomDB.cs" />
     <Compile Include="Presentation\FindCustomerForm.cs">
@@ -103,6 +106,12 @@
     <Compile Include="Presentation\PricingForm.Designer.cs">
       <DependentUpon>PricingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\RegisterNewCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\RegisterNewCustomerForm.Designer.cs">
+      <DependentUpon>RegisterNewCustomerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Presentation\FindCustomerForm.resx">
@@ -119,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\PricingForm.resx">
       <DependentUpon>PricingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\RegisterNewCustomerForm.resx">
+      <DependentUpon>RegisterNewCustomerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

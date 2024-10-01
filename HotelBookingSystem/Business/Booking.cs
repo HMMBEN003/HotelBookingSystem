@@ -13,10 +13,12 @@ namespace HotelBookingSystem.Business
         private float _total = 0;
         private DateTime _checkInDate;
         private DateTime _checkOutDate;
+        private Guest _guest;
 
         public Booking()
         {
             _rooms = new Collection<Room>(); // Initialize the collection in the constructor
+            _guest = new Guest();
         }
 
         // Property for _rooms
@@ -45,6 +47,13 @@ namespace HotelBookingSystem.Business
         {
             get { return _checkOutDate; }
             set { _checkOutDate = value; }
+        }
+
+        // Property for _guest
+        public Guest Guest
+        {
+            get { return _guest; }
+            set { _guest = value; }
         }
 
         // Method to add a room to the booking
