@@ -37,8 +37,6 @@
             this.timeFrameLabel = new System.Windows.Forms.Label();
             this.checkInDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.checkOutDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.occupantsLabel = new System.Windows.Forms.Label();
-            this.occupantsCounter = new System.Windows.Forms.NumericUpDown();
             this.invalidTimeFrameLabel = new System.Windows.Forms.Label();
             this.availableRoomsListView = new System.Windows.Forms.ListView();
             this.selectedRoomsListView = new System.Windows.Forms.ListView();
@@ -50,17 +48,13 @@
             this.CheckInLabel = new System.Windows.Forms.Label();
             this.CheckOutLabel = new System.Windows.Forms.Label();
             this.clickToUnselectLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.roomBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.hotelDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Room = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Rate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.maxOccupantsCountLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.backButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.homeButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.occupantsCounter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.roomBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hotelDBDataSetBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -125,50 +119,23 @@
             // 
             this.checkInDateTimePicker.Font = new System.Drawing.Font("Malgun Gothic", 16.06154F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkInDateTimePicker.Location = new System.Drawing.Point(60, 337);
-            this.checkInDateTimePicker.MaxDate = new System.DateTime(2026, 9, 28, 0, 0, 0, 0);
+            this.checkInDateTimePicker.MaxDate = new System.DateTime(2024, 12, 31, 0, 0, 0, 0);
             this.checkInDateTimePicker.MinDate = new System.DateTime(2024, 9, 28, 0, 0, 0, 0);
             this.checkInDateTimePicker.Name = "checkInDateTimePicker";
             this.checkInDateTimePicker.Size = new System.Drawing.Size(355, 36);
             this.checkInDateTimePicker.TabIndex = 7;
             this.checkInDateTimePicker.Value = new System.DateTime(2024, 9, 28, 0, 0, 0, 0);
+            this.checkInDateTimePicker.ValueChanged += new System.EventHandler(this.checkInDateTimePicker_ValueChanged);
             // 
             // checkOutDateTimePicker
             // 
             this.checkOutDateTimePicker.Font = new System.Drawing.Font("Malgun Gothic", 16.06154F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkOutDateTimePicker.Location = new System.Drawing.Point(60, 406);
+            this.checkOutDateTimePicker.MaxDate = new System.DateTime(2024, 12, 31, 0, 0, 0, 0);
             this.checkOutDateTimePicker.Name = "checkOutDateTimePicker";
             this.checkOutDateTimePicker.Size = new System.Drawing.Size(356, 36);
             this.checkOutDateTimePicker.TabIndex = 8;
-            // 
-            // occupantsLabel
-            // 
-            this.occupantsLabel.AutoSize = true;
-            this.occupantsLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
-            this.occupantsLabel.Font = new System.Drawing.Font("Malgun Gothic", 16.06154F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.occupantsLabel.Location = new System.Drawing.Point(57, 493);
-            this.occupantsLabel.Name = "occupantsLabel";
-            this.occupantsLabel.Size = new System.Drawing.Size(122, 30);
-            this.occupantsLabel.TabIndex = 9;
-            this.occupantsLabel.Text = "Occupants";
-            // 
-            // occupantsCounter
-            // 
-            this.occupantsCounter.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.occupantsCounter.Font = new System.Drawing.Font("Malgun Gothic", 23.81538F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.occupantsCounter.Location = new System.Drawing.Point(60, 541);
-            this.occupantsCounter.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.occupantsCounter.Name = "occupantsCounter";
-            this.occupantsCounter.Size = new System.Drawing.Size(355, 46);
-            this.occupantsCounter.TabIndex = 10;
-            this.occupantsCounter.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.checkOutDateTimePicker.ValueChanged += new System.EventHandler(this.checkOutDateTimePicker_ValueChanged);
             // 
             // invalidTimeFrameLabel
             // 
@@ -178,34 +145,29 @@
             this.invalidTimeFrameLabel.ForeColor = System.Drawing.Color.Red;
             this.invalidTimeFrameLabel.Location = new System.Drawing.Point(56, 453);
             this.invalidTimeFrameLabel.Name = "invalidTimeFrameLabel";
-            this.invalidTimeFrameLabel.Size = new System.Drawing.Size(369, 23);
+            this.invalidTimeFrameLabel.Size = new System.Drawing.Size(153, 23);
             this.invalidTimeFrameLabel.TabIndex = 11;
-            this.invalidTimeFrameLabel.Text = "Invalid Time Frame: Check-Out before Check-In";
+            this.invalidTimeFrameLabel.Text = "Invalid Time Frame";
             this.invalidTimeFrameLabel.Visible = false;
             // 
             // availableRoomsListView
             // 
             this.availableRoomsListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.availableRoomsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Room,
-            this.Rate,
-            this.Description});
             this.availableRoomsListView.Font = new System.Drawing.Font("Malgun Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.availableRoomsListView.HideSelection = false;
-            this.availableRoomsListView.Location = new System.Drawing.Point(592, 104);
+            this.availableRoomsListView.Location = new System.Drawing.Point(592, 131);
             this.availableRoomsListView.Name = "availableRoomsListView";
-            this.availableRoomsListView.Size = new System.Drawing.Size(764, 358);
+            this.availableRoomsListView.Size = new System.Drawing.Size(764, 331);
             this.availableRoomsListView.TabIndex = 13;
             this.availableRoomsListView.UseCompatibleStateImageBehavior = false;
-            this.availableRoomsListView.SelectedIndexChanged += new System.EventHandler(this.availableRoomsListView_SelectedIndexChanged);
             // 
             // selectedRoomsListView
             // 
             this.selectedRoomsListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.selectedRoomsListView.Font = new System.Drawing.Font("Malgun Gothic Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectedRoomsListView.Font = new System.Drawing.Font("Malgun Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.selectedRoomsListView.HideSelection = false;
             this.selectedRoomsListView.Location = new System.Drawing.Point(592, 542);
             this.selectedRoomsListView.Name = "selectedRoomsListView";
@@ -245,12 +207,13 @@
             this.searchButton.BackColor = System.Drawing.Color.Black;
             this.searchButton.Font = new System.Drawing.Font("Malgun Gothic", 16.06154F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchButton.ForeColor = System.Drawing.Color.White;
-            this.searchButton.Location = new System.Drawing.Point(60, 625);
+            this.searchButton.Location = new System.Drawing.Point(60, 510);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(354, 55);
             this.searchButton.TabIndex = 17;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = false;
+            this.searchButton.Visible = false;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // confirmButton
@@ -265,6 +228,7 @@
             this.confirmButton.TabIndex = 18;
             this.confirmButton.Text = "Confirm Room Selection";
             this.confirmButton.UseVisualStyleBackColor = false;
+            this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
             // 
             // maxOccupantsLabel
             // 
@@ -316,19 +280,6 @@
             this.clickToUnselectLabel.TabIndex = 22;
             this.clickToUnselectLabel.Text = "Click to Unselect";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.SystemColors.Control;
-            this.label2.Font = new System.Drawing.Font("Malgun Gothic Semilight", 12.18462F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(972, 76);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(152, 23);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Not Enough Space";
-            this.label2.Visible = false;
-            // 
             // maxOccupantsCountLabel
             // 
             this.maxOccupantsCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -337,18 +288,31 @@
             this.maxOccupantsCountLabel.Font = new System.Drawing.Font("Malgun Gothic", 16.06154F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maxOccupantsCountLabel.Location = new System.Drawing.Point(1317, 71);
             this.maxOccupantsCountLabel.Name = "maxOccupantsCountLabel";
-            this.maxOccupantsCountLabel.Size = new System.Drawing.Size(39, 30);
+            this.maxOccupantsCountLabel.Size = new System.Drawing.Size(22, 30);
             this.maxOccupantsCountLabel.TabIndex = 24;
-            this.maxOccupantsCountLabel.Text = "89";
-            this.maxOccupantsCountLabel.Click += new System.EventHandler(this.label3_Click);
+            this.maxOccupantsCountLabel.Text = "-";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
+            this.label1.Font = new System.Drawing.Font("Malgun Gothic Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(588, 98);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(107, 21);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "Click to Select";
             // 
             // MakeABookingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1483, 856);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.maxOccupantsCountLabel);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.clickToUnselectLabel);
             this.Controls.Add(this.CheckOutLabel);
             this.Controls.Add(this.CheckInLabel);
@@ -360,8 +324,6 @@
             this.Controls.Add(this.selectedRoomsListView);
             this.Controls.Add(this.availableRoomsListView);
             this.Controls.Add(this.invalidTimeFrameLabel);
-            this.Controls.Add(this.occupantsCounter);
-            this.Controls.Add(this.occupantsLabel);
             this.Controls.Add(this.checkOutDateTimePicker);
             this.Controls.Add(this.checkInDateTimePicker);
             this.Controls.Add(this.timeFrameLabel);
@@ -378,7 +340,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.backButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.homeButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.occupantsCounter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.roomBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hotelDBDataSetBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -394,8 +355,6 @@
         private System.Windows.Forms.Label timeFrameLabel;
         private System.Windows.Forms.DateTimePicker checkInDateTimePicker;
         private System.Windows.Forms.DateTimePicker checkOutDateTimePicker;
-        private System.Windows.Forms.Label occupantsLabel;
-        private System.Windows.Forms.NumericUpDown occupantsCounter;
         private System.Windows.Forms.Label invalidTimeFrameLabel;
         private System.Windows.Forms.ListView availableRoomsListView;
         private System.Windows.Forms.ListView selectedRoomsListView;
@@ -407,12 +366,9 @@
         private System.Windows.Forms.Label CheckInLabel;
         private System.Windows.Forms.Label CheckOutLabel;
         private System.Windows.Forms.Label clickToUnselectLabel;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.BindingSource hotelDBDataSetBindingSource;
         private System.Windows.Forms.BindingSource roomBindingSource;
-        private System.Windows.Forms.ColumnHeader Room;
-        private System.Windows.Forms.ColumnHeader Rate;
-        private System.Windows.Forms.ColumnHeader Description;
         private System.Windows.Forms.Label maxOccupantsCountLabel;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Booking.cs" />
     <Compile Include="Business\LoginController.cs" />
     <Compile Include="Business\Room.cs" />
     <Compile Include="Business\RoomController.cs" />
