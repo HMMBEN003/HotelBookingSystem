@@ -21,11 +21,16 @@ namespace HotelBookingSystem.Presentation
         private RoomController roomController;
         private Booking currentBooking;
         private bool isInitialising = true;
+        private string importantInfo = "*Rates per night may vary:\nMid Season (8-15 December): R750 per room per night\nHigh Season (16-31 December): R995 per room per night";
 
         public MakeABookingForm()
         {
             InitializeComponent();
             isInitialising = true;
+
+            // Set the important info text
+            importantInfoLabel.Text = importantInfo;
+            importantInfoLabel.Visible = false; // Initially hide the important info label
 
             // Initialise the Booking object
             currentBooking = new Booking();
@@ -144,7 +149,7 @@ namespace HotelBookingSystem.Presentation
                 roomDetails.Text = room.RoomNumber.ToString();
 
                 // Set the price per night
-                roomDetails.SubItems.Add(room.GetPriceForSeason("mid").ToString("C") + "/person");
+                roomDetails.SubItems.Add(room.GetPriceForSeason("low").ToString("C") + "/room");
 
                 // Set the description or features
                 roomDetails.SubItems.Add(string.Join(", ", room.RoomFeatures)); // Join features as a single string
@@ -202,6 +207,7 @@ namespace HotelBookingSystem.Presentation
                 // Clone the selected item and ensure the font is maintained
                 ListViewItem clonedItem = (ListViewItem)selectedItem.Clone();
                 clonedItem.Font = availableRoomsListView.Font;  // Set font explicitly
+                clonedItem.ForeColor = Color.Red; // Set font colour to red
                 selectedRoomsListView.Items.Add(clonedItem);    // Add to Selected Rooms
 
                 // Sort the Selected Rooms by Room No.
@@ -229,6 +235,7 @@ namespace HotelBookingSystem.Presentation
                 // Clone the selected item and ensure the font is maintained
                 ListViewItem clonedItem = (ListViewItem)selectedItem.Clone();
                 clonedItem.Font = selectedRoomsListView.Font;  // Set font explicitly
+                clonedItem.ForeColor = Color.Black; // Set font colour to black
                 availableRoomsListView.Items.Add(clonedItem);  // Add back to Available Rooms
 
                 // Sort the Available Rooms by Room No.
@@ -308,6 +315,9 @@ namespace HotelBookingSystem.Presentation
                 invalidTimeFrameLabel.Visible = false;
                 searchForRooms();
             }
+
+            // Check if the date falls within 8-31 December
+            CheckImportantInfoVisibility();
         }
 
         private void checkOutDateTimePicker_ValueChanged(object sender, EventArgs e)
@@ -325,6 +335,23 @@ namespace HotelBookingSystem.Presentation
                 invalidTimeFrameLabel.Visible = false;
                 searchForRooms();
             }
+
+            // Check if the date falls within 8-31 December
+            CheckImportantInfoVisibility();
+        }
+
+        // Method to check if the selected dates fall within 8-31 December
+        private void CheckImportantInfoVisibility()
+        {
+            DateTime checkInDate = currentBooking.CheckInDate;
+            DateTime checkOutDate = currentBooking.CheckOutDate;
+
+            // Check if the check-in or check-out dates are within 8-31 December
+            bool isWithinRange = (checkInDate.Month == 12 && checkInDate.Day >= 8 && checkInDate.Day <= 31) ||
+                                 (checkOutDate.Month == 12 && checkOutDate.Day >= 8 && checkOutDate.Day <= 31);
+
+            // Show or hide the important info label based on the date range
+            importantInfoLabel.Visible = isWithinRange;
         }
 
         private void confirmButton_Click(object sender, EventArgs e)
@@ -353,7 +380,10 @@ namespace HotelBookingSystem.Presentation
                 MessageBox.Show("Please select at least one room for your booking.", "No Rooms Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return; // Exit the method if no rooms are selected
             }
-        }
 
+            this.Hide(); // Hide the current form
+            PricingForm pricingForm = new PricingForm();
+            pricingForm.Show(); // Show the new MakeABookingForm
+        }
     }
 }

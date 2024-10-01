@@ -52,6 +52,7 @@
             this.hotelDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.maxOccupantsCountLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.importantInfoLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.backButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.homeButton)).BeginInit();
@@ -168,6 +169,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.selectedRoomsListView.Font = new System.Drawing.Font("Malgun Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectedRoomsListView.ForeColor = System.Drawing.Color.Red;
             this.selectedRoomsListView.HideSelection = false;
             this.selectedRoomsListView.Location = new System.Drawing.Point(592, 542);
             this.selectedRoomsListView.Name = "selectedRoomsListView";
@@ -306,11 +308,25 @@
             this.label1.TabIndex = 25;
             this.label1.Text = "Click to Select";
             // 
+            // importantInfoLabel
+            // 
+            this.importantInfoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.importantInfoLabel.AutoSize = true;
+            this.importantInfoLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(229)))), ((int)(((byte)(229)))));
+            this.importantInfoLabel.Font = new System.Drawing.Font("Malgun Gothic Semilight", 12.18462F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.importantInfoLabel.Location = new System.Drawing.Point(40, 721);
+            this.importantInfoLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.importantInfoLabel.Name = "importantInfoLabel";
+            this.importantInfoLabel.Size = new System.Drawing.Size(128, 23);
+            this.importantInfoLabel.TabIndex = 26;
+            this.importantInfoLabel.Text = "Check-out Date";
+            // 
             // MakeABookingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1483, 856);
+            this.Controls.Add(this.importantInfoLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.maxOccupantsCountLabel);
             this.Controls.Add(this.clickToUnselectLabel);
@@ -370,5 +386,6 @@
         private System.Windows.Forms.BindingSource roomBindingSource;
         private System.Windows.Forms.Label maxOccupantsCountLabel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label importantInfoLabel;
     }
 }
