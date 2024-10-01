@@ -65,6 +65,7 @@
     <Compile Include="Business\Guest.cs" />
     <Compile Include="Business\GuestController.cs" />
     <Compile Include="Business\LoginController.cs" />
+    <Compile Include="Business\Occupants.cs" />
     <Compile Include="Business\Room.cs" />
     <Compile Include="Business\RoomController.cs" />
     <Compile Include="Data\DB.cs" />

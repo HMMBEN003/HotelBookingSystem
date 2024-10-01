@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -39,146 +40,61 @@ namespace HotelBookingSystem.Presentation
             /*// Initialise the total price
             UpdateTotalPrice();*/
 
-            // Subscribe to NumericUpDown value changed events
-            adultUpDown.ValueChanged += numAdults_ValueChanged;
-            childrenUpDown.ValueChanged += numChildren_ValueChanged;
-            infantsUpDown.ValueChanged += numInfants_ValueChanged;
-
             // Attach the ItemSelectionChanged event for selectedRoomsListView
             selectedRoomsListView.ItemSelectionChanged += SelectedRoomsListView_ItemSelectionChanged;
 
-            foreach(Room room in currentBooking.Rooms)
+            foreach (Room room in currentBooking.Rooms)
             {
+                room.Adults = room.Adults == 0 ? 1: room.Adults;
+
                 room.TotalPrice = GetTotalPrice();
                 currentBooking.Total += room.TotalPrice;
             }
 
             totalPriceLabel.Text = $"R{currentBooking.Total},00";
-            depositLabel.Text = $"R{currentBooking.Total*0.1},00";
+            depositLabel.Text = $"R{currentBooking.Total * 0.1},00";
         }
 
         private void SelectedRoomsListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            if (e.IsSelected) // Check if an item is selected
+            if (e.IsSelected)
             {
                 // Retrieve the Room object from the Tag property of the selected ListViewItem
                 selectedRoom = (Room)e.Item.Tag;
+                updateButtons();
 
-                // Set the max and min values before setting the values
-                //adultUpDown.Maximum = 2; // Max 2 adults
-                childrenUpDown.Maximum = 4 - (int)adultUpDown.Value; // Adjust based on the remaining occupants
-                infantsUpDown.Maximum = 4 - (int)(adultUpDown.Value + childrenUpDown.Value); // Adjust based on the remaining occupants
 
-                // Set the values for the upDowns based on the selected room's configuration
-                if (selectedRoom.Adults >= adultUpDown.Minimum && selectedRoom.Adults <= adultUpDown.Maximum)
+                // Make configuration options visible (only on inital load)
+                if(occupantsLabel.Visible == false)
                 {
-                    adultUpDown.Value = selectedRoom.Adults;  // Set adult count
+                    occupantsLabel.Visible = true;
+                    oneLabel.Visible = true;
+                    twoLabel.Visible = true;
+                    threeLabel.Visible = true;
+                    fourLabel.Visible = true;
+
+                    adultLabel.Visible = true;
+                    childLabel.Visible = true;
+                    infantLabel.Visible = true;
+
+                    occupant1AdultButton.Visible = true;
+                    occupant1ChildPictureBox.Visible = true;
+                    occupant1InfantPictureBox.Visible = true;
+
+                    occupant2AdultButton.Visible = true;
+                    occupant2ChildButton.Visible = true;
+                    occupant2InfantButton.Visible = true;
+
+                    occupant3AdultPictureBox.Visible = true;
+                    occupant3ChildButton.Visible = true;
+                    occupant3InfantButton.Visible = true;
+
+                    occupant4AdultPictureBox.Visible = true;
+                    occupant4ChildButton.Visible = true;
+                    occupant4InfantButton.Visible = true;
                 }
-
-                if (selectedRoom.Teens >= childrenUpDown.Minimum && selectedRoom.Teens <= childrenUpDown.Maximum)
-                {
-                    childrenUpDown.Value = selectedRoom.Teens;  // Set children count
-                }
-
-                if (selectedRoom.Infants >= infantsUpDown.Minimum && selectedRoom.Infants <= infantsUpDown.Maximum)
-                {
-                    infantsUpDown.Value = selectedRoom.Infants;  // Set infants count
-                }
-
-                numberOfAdultsLabel.Visible = true;
-                adultUpDown.Visible = true;
-
-                numberOfChildrenLabel.Visible = true;
-                childrenUpDown.Visible = true;
-
-                numberOfInfantsLabel.Visible = true;
-                infantsUpDown.Visible = true;
             }
         }
-
-
-        private void setNewMaxes()
-        {
-            // Get the current values of the numericUpDown controls
-            int currentAdults = (int)adultUpDown.Value;
-            int currentChildren = (int)childrenUpDown.Value;
-            int currentInfants = (int)infantsUpDown.Value;
-
-            // Total occupants
-            int totalOccupants = currentAdults + currentChildren + currentInfants;
-
-            // Ensure there is at least 1 adult
-            if (currentAdults < 1)
-            {
-                adultUpDown.Value = 1;
-                currentAdults = 1;
-            }
-
-            // Calculate how many more occupants can be added based on the total max of 4 occupants
-            int remainingOccupants = 4 - totalOccupants;
-
-            // Set the maximum for adults between 0 and 2, we can't have more than 2 adults
-            adultUpDown.Maximum = Math.Min(2, 4 - (currentChildren + currentInfants)); // Max is either 2 or enough to reach 4 total
-
-            // Set the maximum values for children and infants based on remaining space
-            childrenUpDown.Maximum = Math.Max(0, 4 - (currentAdults + currentInfants));  // No negative max
-            infantsUpDown.Maximum = Math.Max(0, 4 - (currentAdults + currentChildren));  // No negative max
-        }
-
-
-        // Method for when the Number of Adults value is changed
-        private void numAdults_ValueChanged(object sender, EventArgs e)
-        {
-            selectedRoom.Adults = (int) adultUpDown.Value;
-            setNewMaxes();
-        }
-
-        // Method for when the Number of Children value is changed
-        private void numChildren_ValueChanged(object sender, EventArgs e)
-        {
-            selectedRoom.Teens = (int)childrenUpDown.Value;
-            setNewMaxes();
-        }
-
-        // Method for when the Number of Infants value is changed
-        private void numInfants_ValueChanged(object sender, EventArgs e)
-        {
-            selectedRoom.Infants = (int)infantsUpDown.Value;
-            setNewMaxes();
-        }
-
-        // Validate total occupants in the room
-        private void ValidateOccupants()
-        {
-            int totalOccupants = (int)(adultUpDown.Value + childrenUpDown.Value + infantsUpDown.Value);
-            if (totalOccupants > 4)
-            {
-                MessageBox.Show("A maximum of 4 occupants is allowed per room.", "Invalid Occupants", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-            }
-        }
-
-        /*// Calculate the total price based on the currentBooking and selected occupants
-        private void UpdateTotalPrice()
-        {
-            totalPrice = 0;
-
-            // Loop through the selected time frame
-            for (DateTime date = currentBooking.CheckInDate; date < currentBooking.CheckOutDate; date = date.AddDays(1))
-            {
-                // Determine the room rate based on the season
-                decimal dailyRate = GetDailyRate(date);
-
-                // Multiply by the number of rooms and add to total
-                totalPrice += dailyRate;
-            }
-
-            totalPrice = totalPrice * currentBooking.Rooms.Count;
-
-            // Update the price and deposit labels
-            totalPriceLabel.Text = "R" + totalPrice.ToString("N2");
-            depositLabel.Text = "R" + (totalPrice * 0.1M).ToString("N2");
-        }*/
 
         // Calculate the total price based on the currentBooking and selected occupants
         private int GetTotalPrice()
@@ -195,7 +111,7 @@ namespace HotelBookingSystem.Presentation
                 totalPrice += dailyRate;
             }
 
-            return (int) totalPrice;
+            return (int)totalPrice;
         }
 
 
@@ -283,6 +199,7 @@ namespace HotelBookingSystem.Presentation
 
             // Ensure the ListView is refreshed
             selectedRoomsListView.Refresh();
+
         }
 
 
@@ -361,6 +278,159 @@ namespace HotelBookingSystem.Presentation
                 bookingSummary.Show(); // Show the new BookingSummaryForm
             }
             
+        }
+
+        // Unselects a button (resets its style)
+        private void unselectButton(Button button)
+        {
+            button.BackColor = Color.FromArgb(229, 229, 229);
+            button.ForeColor = Color.Black;
+        }
+
+        // Selects a button (changes its style to selected)
+        private void selectButton(Button button)
+        {
+            button.BackColor = Color.Black;
+            button.ForeColor = Color.White;
+        }
+
+        public void updateButtons()
+        {
+            int adultCount = 1; // There must be at least one adult
+            int childCount = 0;
+            int infantCount = 0;
+
+            // Occupant 2
+            if (selectedRoom.Occupants.Occupant2 == OccupantTye.Adult)
+            {
+                selectButton(occupant2AdultButton);
+                unselectButton(occupant2ChildButton);
+                unselectButton(occupant2InfantButton);
+                adultCount++;
+            }
+            else if (selectedRoom.Occupants.Occupant2 == OccupantTye.Child)
+            {
+                unselectButton(occupant2AdultButton);
+                selectButton(occupant2ChildButton);
+                unselectButton(occupant2InfantButton);
+                childCount++;
+            }
+            else if (selectedRoom.Occupants.Occupant2 == OccupantTye.Infant)
+            {
+                unselectButton(occupant2AdultButton);
+                unselectButton(occupant2ChildButton);
+                selectButton(occupant2InfantButton);
+                infantCount++;
+            }
+            else if (selectedRoom.Occupants.Occupant2 == OccupantTye.None)
+            {
+                unselectButton(occupant2AdultButton);
+                unselectButton(occupant2ChildButton);
+                unselectButton(occupant2InfantButton);
+            }
+
+            // Occupant 3
+            if (selectedRoom.Occupants.Occupant3 == OccupantTye.Adult)
+            {
+                unselectButton(occupant3ChildButton);
+                unselectButton(occupant3InfantButton);
+                adultCount++;
+            }
+            else if (selectedRoom.Occupants.Occupant3 == OccupantTye.Child)
+            {
+                selectButton(occupant3ChildButton);
+                unselectButton(occupant3InfantButton);
+                childCount++;
+            }
+            else if (selectedRoom.Occupants.Occupant3 == OccupantTye.Infant)
+            {
+                unselectButton(occupant3ChildButton);
+                selectButton(occupant3InfantButton);
+                infantCount++;
+            }
+            else if (selectedRoom.Occupants.Occupant3 == OccupantTye.None)
+            {
+                unselectButton(occupant3ChildButton);
+                unselectButton(occupant3InfantButton);
+            }
+
+            // Occupant 4
+            if (selectedRoom.Occupants.Occupant4 == OccupantTye.Adult)
+            {
+                unselectButton(occupant4ChildButton);
+                unselectButton(occupant4InfantButton);
+                adultCount++;
+            }
+            else if (selectedRoom.Occupants.Occupant4 == OccupantTye.Child)
+            {
+                selectButton(occupant4ChildButton);
+                unselectButton(occupant4InfantButton);
+                childCount++;
+            }
+            else if (selectedRoom.Occupants.Occupant4 == OccupantTye.Infant)
+            {
+                unselectButton(occupant4ChildButton);
+                selectButton(occupant4InfantButton);
+                infantCount++;
+            }
+            else if (selectedRoom.Occupants.Occupant4 == OccupantTye.None)
+            {
+                unselectButton(occupant4ChildButton);
+                unselectButton(occupant4InfantButton);
+            }
+
+            // Update room properties
+            selectedRoom.Adults = adultCount;
+            selectedRoom.Teens = childCount;
+            selectedRoom.Infants = infantCount;
+        }
+
+
+
+        // Occupant 2 Row
+        private void occupant2AdultButton_Click(object sender, EventArgs e)
+        {
+            selectedRoom.Occupants.Occupant2 = selectedRoom.Occupants.Occupant2 == OccupantTye.Adult ? OccupantTye.None : OccupantTye.Adult;
+            updateButtons();
+        }
+
+        private void occupant2ChildButton_Click(object sender, EventArgs e)
+        {
+            selectedRoom.Occupants.Occupant2 = selectedRoom.Occupants.Occupant2 == OccupantTye.Child ? OccupantTye.None : OccupantTye.Child;
+            updateButtons();
+        }
+
+        private void occupant2InfantButton_Click(object sender, EventArgs e)
+        {
+            selectedRoom.Occupants.Occupant2 = selectedRoom.Occupants.Occupant2 == OccupantTye.Infant ? OccupantTye.None : OccupantTye.Infant;
+            updateButtons();
+        }
+
+        // Occupant 3 Row
+
+        private void occupant3ChildButton_Click(object sender, EventArgs e)
+        {
+            selectedRoom.Occupants.Occupant3 = selectedRoom.Occupants.Occupant3 == OccupantTye.Child ? OccupantTye.None : OccupantTye.Child;
+            updateButtons();
+        }
+
+        private void occupant3InfantButton_Click(object sender, EventArgs e)
+        {
+            selectedRoom.Occupants.Occupant3 = selectedRoom.Occupants.Occupant3 == OccupantTye.Infant ? OccupantTye.None : OccupantTye.Infant;
+            updateButtons();
+        }
+
+        // Occupant 4 Row
+        private void occupant4ChildButton_Click(object sender, EventArgs e)
+        {
+            selectedRoom.Occupants.Occupant4 = selectedRoom.Occupants.Occupant4 == OccupantTye.Child ? OccupantTye.None : OccupantTye.Child;
+            updateButtons();
+        }
+
+        private void occupant4InfantButton_Click(object sender, EventArgs e)
+        {
+            selectedRoom.Occupants.Occupant4 = selectedRoom.Occupants.Occupant4 == OccupantTye.Infant ? OccupantTye.None : OccupantTye.Infant;
+            updateButtons();
         }
     }
 }

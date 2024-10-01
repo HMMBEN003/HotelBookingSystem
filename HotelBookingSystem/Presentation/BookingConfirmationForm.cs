@@ -13,12 +13,14 @@ namespace HotelBookingSystem.Presentation
 {
     public partial class BookingConfirmationForm : Form
     {
-        private bool backButtonPressed;
         private Booking currentBooking;
         public BookingConfirmationForm(Booking currentBooking)
         {
             InitializeComponent();
             this.currentBooking = currentBooking;
+
+            // Attach the FormClosing event
+            this.FormClosing += Close_Form;
 
             nameLabel.Text = currentBooking.Guest.FirstName + " " + currentBooking.Guest.LastName;
             timeFrameLabel.Text = FormatTimeFrame(currentBooking);
@@ -30,6 +32,11 @@ namespace HotelBookingSystem.Presentation
 
             // Populate the ListView with data from the current booking
             PopulateBookingSummary();
+        }
+
+        private void Close_Form(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
 
         private string FormatTimeFrame(Booking currentBooking)
@@ -100,7 +107,6 @@ namespace HotelBookingSystem.Presentation
 
         private void homeButton_Click(object sender, EventArgs e)
         {
-            backButtonPressed = true;
             this.Close();
 
             // Create a copy of the currently open forms
