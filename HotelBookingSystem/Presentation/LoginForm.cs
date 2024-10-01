@@ -38,7 +38,6 @@ namespace HotelBookingSystem
                 // Login Successful
                 incorrectLabel.Visible = false;
                 string employeeName = loginController.GetEmployeeName(staffNumber);
-                Console.WriteLine($"Login successful: {employeeName}");
 
                 staffNumberTextBox.Text = "";
                 passwordTextBox.Text = "";

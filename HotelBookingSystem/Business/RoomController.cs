@@ -119,7 +119,7 @@ namespace HotelBookingSystem.Business
         #endregion
 
         #region FindByFeature Method
-        // This method finds rooms by a specific feature (e.g., "Pool", "WiFi")
+        // This method finds rooms by a specific feature (e.g., "Moutain View", "Garden Access")
         public Collection<Room> FindByFeature(Collection<Room> allRooms, string feature)
         {
             Collection<Room> matches = new Collection<Room>();

@@ -13,6 +13,9 @@ namespace HotelBookingSystem.Business
         private decimal lowSeasonPrice;  // Price for low season
         private decimal midSeasonPrice;  // Price for mid season
         private decimal highSeasonPrice; // Price for high season
+        private int adults;
+        private int teens;
+        private int infants;
         #endregion
 
         #region Property methods
@@ -57,11 +60,32 @@ namespace HotelBookingSystem.Business
             get { return highSeasonPrice; }
             set { highSeasonPrice = value; }
         }
+
+        // Getter and Setter for Adults
+        public int Adults
+        {
+            get { return adults; }
+            set { adults = value; }
+        }
+
+        // Getter and Setter for Teens
+        public int Teens
+        {
+            get { return teens; }
+            set { teens = value; }
+        }
+
+        // Getter and Setter for Infants
+        public int Infants
+        {
+            get { return infants; }
+            set { infants = value; }
+        }
         #endregion
 
         #region Constructor
         // Constructor to initialize the Room with seasonal prices
-        public Room(int id, string number, List<string> features, decimal lowPrice, decimal midPrice, decimal highPrice)
+        public Room(int id, string number, List<string> features, decimal lowPrice, decimal midPrice, decimal highPrice, int adults, int teens, int infants)
         {
             roomId = id;
             roomNumber = number;
@@ -69,6 +93,9 @@ namespace HotelBookingSystem.Business
             lowSeasonPrice = lowPrice;
             midSeasonPrice = midPrice;
             highSeasonPrice = highPrice;
+            this.adults = adults;
+            this.teens = teens;
+            this.infants = infants;
         }
         #endregion
 

@@ -60,10 +60,10 @@
             // 
             this.staffNumberTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.staffNumberTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.staffNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.staffNumberTextBox.Font = new System.Drawing.Font("Malgun Gothic", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.staffNumberTextBox.Location = new System.Drawing.Point(234, 261);
             this.staffNumberTextBox.Name = "staffNumberTextBox";
-            this.staffNumberTextBox.Size = new System.Drawing.Size(340, 31);
+            this.staffNumberTextBox.Size = new System.Drawing.Size(340, 36);
             this.staffNumberTextBox.TabIndex = 3;
             this.staffNumberTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -71,10 +71,10 @@
             // 
             this.passwordTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.passwordTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.passwordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordTextBox.Font = new System.Drawing.Font("Malgun Gothic", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordTextBox.Location = new System.Drawing.Point(234, 366);
             this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.Size = new System.Drawing.Size(340, 31);
+            this.passwordTextBox.Size = new System.Drawing.Size(340, 36);
             this.passwordTextBox.TabIndex = 4;
             this.passwordTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.passwordTextBox.UseSystemPasswordChar = true;
@@ -111,7 +111,7 @@
             this.logInButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.logInButton.Location = new System.Drawing.Point(234, 459);
             this.logInButton.Name = "logInButton";
-            this.logInButton.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.logInButton.Padding = new System.Windows.Forms.Padding(8);
             this.logInButton.Size = new System.Drawing.Size(340, 55);
             this.logInButton.TabIndex = 7;
             this.logInButton.Text = "Log In";

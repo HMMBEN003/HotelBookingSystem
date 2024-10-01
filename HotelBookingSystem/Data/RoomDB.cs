@@ -14,7 +14,7 @@ namespace HotelBookingSystem.Data
         private string table = "Room"; // Table name in the database
         private string roomFeaturesTable = "RoomFeatures"; // Table name in the database
         private string sqlLocal = "SELECT * FROM Room"; // SQL query to select all rooms
-        private Collection<Room> rooms; // Collection to hold Room objects`
+        private Collection<Room> rooms; // Collection to hold Room objects
         #endregion
 
         #region Property Method: Collection
@@ -68,7 +68,10 @@ namespace HotelBookingSystem.Data
                         features,  // Pass the list of features here
                         Convert.ToDecimal(myRow["low_season_price"]),
                         Convert.ToDecimal(myRow["mid_season_price"]),
-                        Convert.ToDecimal(myRow["high_season_price"])
+                        Convert.ToDecimal(myRow["high_season_price"]),
+                        Convert.ToInt32(myRow["adults"]),
+                        Convert.ToInt32(myRow["teens"]),
+                        Convert.ToInt32(myRow["infants"])
                     );
 
                     // Add the Room object to the collection
@@ -76,8 +79,6 @@ namespace HotelBookingSystem.Data
                 }
             }
         }
-
-
 
         // Fill the dataset with room data and map the Room object to a DataRow
         private void FillRow(DataRow aRow, Room aRoom, DB.DBOperation operation)
@@ -87,10 +88,12 @@ namespace HotelBookingSystem.Data
                 aRow["room_id"] = aRoom.RoomId;  // Auto-assigned Room ID
             }
             aRow["room_number"] = aRoom.RoomNumber; // Assign room number
-            aRow["room_features"] = aRoom.RoomFeatures; // Assign room features
             aRow["low_season_price"] = aRoom.LowSeasonPrice; // Assign prices for seasons
             aRow["mid_season_price"] = aRoom.MidSeasonPrice;
             aRow["high_season_price"] = aRoom.HighSeasonPrice;
+            aRow["adults"] = aRoom.Adults; // Assign adults
+            aRow["teens"] = aRoom.Teens; // Assign teens
+            aRow["infants"] = aRoom.Infants; // Assign infants
         }
 
         // Find the index of a specific room by Room ID
@@ -159,8 +162,6 @@ namespace HotelBookingSystem.Data
 
             return features;
         }
-
-
         #endregion
 
         #region Database Operations CRUD
@@ -200,9 +201,6 @@ namespace HotelBookingSystem.Data
             param = new SqlParameter("@room_number", SqlDbType.NVarChar, 10, "room_number");
             daMain.InsertCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@room_features", SqlDbType.NVarChar, 180, "room_features");
-            daMain.InsertCommand.Parameters.Add(param);
-
             param = new SqlParameter("@low_season_price", SqlDbType.Decimal, 10, "low_season_price");
             daMain.InsertCommand.Parameters.Add(param);
 
@@ -210,6 +208,15 @@ namespace HotelBookingSystem.Data
             daMain.InsertCommand.Parameters.Add(param);
 
             param = new SqlParameter("@high_season_price", SqlDbType.Decimal, 10, "high_season_price");
+            daMain.InsertCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@adults", SqlDbType.Int, 10, "adults");
+            daMain.InsertCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@teens", SqlDbType.Int, 10, "teens");
+            daMain.InsertCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@infants", SqlDbType.Int, 10, "infants");
             daMain.InsertCommand.Parameters.Add(param);
         }
 
@@ -220,10 +227,6 @@ namespace HotelBookingSystem.Data
             param.SourceVersion = DataRowVersion.Current;
             daMain.UpdateCommand.Parameters.Add(param);
 
-            param = new SqlParameter("@room_features", SqlDbType.NVarChar, 180, "room_features");
-            param.SourceVersion = DataRowVersion.Current;
-            daMain.UpdateCommand.Parameters.Add(param);
-
             param = new SqlParameter("@low_season_price", SqlDbType.Decimal, 10, "low_season_price");
             param.SourceVersion = DataRowVersion.Current;
             daMain.UpdateCommand.Parameters.Add(param);
@@ -233,6 +236,18 @@ namespace HotelBookingSystem.Data
             daMain.UpdateCommand.Parameters.Add(param);
 
             param = new SqlParameter("@high_season_price", SqlDbType.Decimal, 10, "high_season_price");
+            param.SourceVersion = DataRowVersion.Current;
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@adults", SqlDbType.Int, 10, "adults");
+            param.SourceVersion = DataRowVersion.Current;
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@teens", SqlDbType.Int, 10, "teens");
+            param.SourceVersion = DataRowVersion.Current;
+            daMain.UpdateCommand.Parameters.Add(param);
+
+            param = new SqlParameter("@infants", SqlDbType.Int, 10, "infants");
             param.SourceVersion = DataRowVersion.Current;
             daMain.UpdateCommand.Parameters.Add(param);
 
@@ -245,8 +260,8 @@ namespace HotelBookingSystem.Data
         private void Create_INSERT_Command(Room aRoom)
         {
             daMain.InsertCommand = new SqlCommand(
-                "INSERT INTO Room (room_id, room_number, room_features, low_season_price, mid_season_price, high_season_price) " +
-                "VALUES (@room_id, @room_number, @room_features, @low_season_price, @mid_season_price, @high_season_price)", cnMain);
+                "INSERT INTO Room (room_id, room_number, low_season_price, mid_season_price, high_season_price, adults, teens, infants) " +
+                "VALUES (@room_id, @room_number, @low_season_price, @mid_season_price, @high_season_price, @adults, @teens, @infants)", cnMain);
             Build_INSERT_Parameters(aRoom); // Build parameters for the query
         }
 
@@ -254,8 +269,9 @@ namespace HotelBookingSystem.Data
         private void Create_UPDATE_Command(Room aRoom)
         {
             daMain.UpdateCommand = new SqlCommand(
-                "UPDATE Room SET room_number = @room_number, room_features = @room_features, " +
-                "low_season_price = @low_season_price, mid_season_price = @mid_season_price, high_season_price = @high_season_price " +
+                "UPDATE Room SET room_number = @room_number, low_season_price = @low_season_price, " +
+                "mid_season_price = @mid_season_price, high_season_price = @high_season_price, " +
+                "adults = @adults, teens = @teens, infants = @infants " +
                 "WHERE room_id = @Original_room_id", cnMain);
             Build_UPDATE_Parameters(aRoom); // Build parameters for the query
         }

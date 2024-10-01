@@ -42,17 +42,16 @@
             this.selectedRoomsListView = new System.Windows.Forms.ListView();
             this.availableRoomsLabel = new System.Windows.Forms.Label();
             this.selectedRoomsLabel = new System.Windows.Forms.Label();
-            this.searchButton = new System.Windows.Forms.Button();
             this.confirmButton = new System.Windows.Forms.Button();
             this.maxOccupantsLabel = new System.Windows.Forms.Label();
             this.CheckInLabel = new System.Windows.Forms.Label();
             this.CheckOutLabel = new System.Windows.Forms.Label();
             this.clickToUnselectLabel = new System.Windows.Forms.Label();
-            this.roomBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.hotelDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.maxOccupantsCountLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.importantInfoLabel = new System.Windows.Forms.Label();
+            this.roomBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.hotelDBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.backButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.homeButton)).BeginInit();
@@ -204,20 +203,6 @@
             this.selectedRoomsLabel.TabIndex = 16;
             this.selectedRoomsLabel.Text = "Selected Rooms";
             // 
-            // searchButton
-            // 
-            this.searchButton.BackColor = System.Drawing.Color.Black;
-            this.searchButton.Font = new System.Drawing.Font("Malgun Gothic", 16.06154F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchButton.ForeColor = System.Drawing.Color.White;
-            this.searchButton.Location = new System.Drawing.Point(60, 510);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(354, 55);
-            this.searchButton.TabIndex = 17;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = false;
-            this.searchButton.Visible = false;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
-            // 
             // confirmButton
             // 
             this.confirmButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -317,9 +302,10 @@
             this.importantInfoLabel.Location = new System.Drawing.Point(40, 721);
             this.importantInfoLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.importantInfoLabel.Name = "importantInfoLabel";
-            this.importantInfoLabel.Size = new System.Drawing.Size(128, 23);
+            this.importantInfoLabel.Size = new System.Drawing.Size(436, 69);
             this.importantInfoLabel.TabIndex = 26;
-            this.importantInfoLabel.Text = "Check-out Date";
+            this.importantInfoLabel.Text = "*Rates per night may vary:\r\nMid Season (8-15 December): R750 per room per night\r\n" +
+    "High Season (16-31 December): R995 per room per night";
             // 
             // MakeABookingForm
             // 
@@ -334,7 +320,6 @@
             this.Controls.Add(this.CheckInLabel);
             this.Controls.Add(this.maxOccupantsLabel);
             this.Controls.Add(this.confirmButton);
-            this.Controls.Add(this.searchButton);
             this.Controls.Add(this.selectedRoomsLabel);
             this.Controls.Add(this.availableRoomsLabel);
             this.Controls.Add(this.selectedRoomsListView);
@@ -348,7 +333,6 @@
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.pictureBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
             this.Name = "MakeABookingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MakeABookingForm";
@@ -376,7 +360,6 @@
         private System.Windows.Forms.ListView selectedRoomsListView;
         private System.Windows.Forms.Label availableRoomsLabel;
         private System.Windows.Forms.Label selectedRoomsLabel;
-        private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.Button confirmButton;
         private System.Windows.Forms.Label maxOccupantsLabel;
         private System.Windows.Forms.Label CheckInLabel;

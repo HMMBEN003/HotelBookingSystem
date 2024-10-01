@@ -21,15 +21,12 @@ namespace HotelBookingSystem.Presentation
         private RoomController roomController;
         private Booking currentBooking;
         private bool isInitialising = true;
-        private string importantInfo = "*Rates per night may vary:\nMid Season (8-15 December): R750 per room per night\nHigh Season (16-31 December): R995 per room per night";
 
         public MakeABookingForm()
         {
             InitializeComponent();
             isInitialising = true;
 
-            // Set the important info text
-            importantInfoLabel.Text = importantInfo;
             importantInfoLabel.Visible = false; // Initially hide the important info label
 
             // Initialise the Booking object
@@ -97,7 +94,7 @@ namespace HotelBookingSystem.Presentation
 
         private void Close_Form(object sender, FormClosingEventArgs e)
         {
-            if (!backButtonPressed) Application.Exit();
+            if (!backButtonPressed && this.Visible) Application.Exit();
         }
 
         private void backButton_Click(object sender, EventArgs e)
@@ -382,8 +379,9 @@ namespace HotelBookingSystem.Presentation
             }
 
             this.Hide(); // Hide the current form
-            PricingForm pricingForm = new PricingForm();
+            PricingForm pricingForm = new PricingForm(currentBooking);
             pricingForm.Show(); // Show the new MakeABookingForm
         }
+
     }
 }

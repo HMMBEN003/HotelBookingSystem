@@ -68,6 +68,12 @@
     <Compile Include="Data\DB.cs" />
     <Compile Include="Data\LoginDB.cs" />
     <Compile Include="Data\RoomDB.cs" />
+    <Compile Include="Presentation\FindCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\FindCustomerForm.Designer.cs">
+      <DependentUpon>FindCustomerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\HomeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Presentation\FindCustomerForm.resx">
+      <DependentUpon>FindCustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentation\HomeForm.resx">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </EmbeddedResource>
