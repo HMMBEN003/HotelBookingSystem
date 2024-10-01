@@ -36,8 +36,8 @@ namespace HotelBookingSystem.Presentation
             // Call method to populate the list view
             PopulateSelectedRoomsListView();
 
-            // Initialise the total price
-            UpdateTotalPrice();
+            /*// Initialise the total price
+            UpdateTotalPrice();*/
 
             // Subscribe to NumericUpDown value changed events
             adultUpDown.ValueChanged += numAdults_ValueChanged;
@@ -46,6 +46,15 @@ namespace HotelBookingSystem.Presentation
 
             // Attach the ItemSelectionChanged event for selectedRoomsListView
             selectedRoomsListView.ItemSelectionChanged += SelectedRoomsListView_ItemSelectionChanged;
+
+            foreach(Room room in currentBooking.Rooms)
+            {
+                room.TotalPrice = GetTotalPrice();
+                currentBooking.Total += room.TotalPrice;
+            }
+
+            totalPriceLabel.Text = $"R{currentBooking.Total},00";
+            depositLabel.Text = $"R{currentBooking.Total*0.1},00";
         }
 
         private void SelectedRoomsListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -149,7 +158,7 @@ namespace HotelBookingSystem.Presentation
             }
         }
 
-        // Calculate the total price based on the currentBooking and selected occupants
+        /*// Calculate the total price based on the currentBooking and selected occupants
         private void UpdateTotalPrice()
         {
             totalPrice = 0;
@@ -169,6 +178,24 @@ namespace HotelBookingSystem.Presentation
             // Update the price and deposit labels
             totalPriceLabel.Text = "R" + totalPrice.ToString("N2");
             depositLabel.Text = "R" + (totalPrice * 0.1M).ToString("N2");
+        }*/
+
+        // Calculate the total price based on the currentBooking and selected occupants
+        private int GetTotalPrice()
+        {
+            totalPrice = 0;
+
+            // Loop through the selected time frame
+            for (DateTime date = currentBooking.CheckInDate; date < currentBooking.CheckOutDate; date = date.AddDays(1))
+            {
+                // Determine the room rate based on the season
+                decimal dailyRate = GetDailyRate(date);
+
+                // Multiply by the number of rooms and add to total
+                totalPrice += dailyRate;
+            }
+
+            return (int) totalPrice;
         }
 
 

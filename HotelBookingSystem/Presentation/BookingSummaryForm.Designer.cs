@@ -171,6 +171,7 @@
             // 
             this.bookingSummaryListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.bookingSummaryListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bookingSummaryListView.HideSelection = false;
             this.bookingSummaryListView.Location = new System.Drawing.Point(44, 326);
             this.bookingSummaryListView.Name = "bookingSummaryListView";
@@ -190,6 +191,7 @@
             this.proceedToPaymentButton.TabIndex = 25;
             this.proceedToPaymentButton.Text = "Proceed to Payment";
             this.proceedToPaymentButton.UseVisualStyleBackColor = false;
+            this.proceedToPaymentButton.Click += new System.EventHandler(this.proceedToPaymentButton_Click);
             // 
             // BookingSummaryForm
             // 

@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using HotelBookingSystem.Business;
 
 namespace HotelBookingSystem.Presentation
 {
-    public partial class BookingSummaryForm : Form
+    public partial class BookingConfirmationForm : Form
     {
-        private bool backButtonPressed = false;
+        private bool backButtonPressed;
         private Booking currentBooking;
-
-        public BookingSummaryForm(Booking currentBooking)
+        public BookingConfirmationForm(Booking currentBooking)
         {
             InitializeComponent();
             this.currentBooking = currentBooking;
 
-            // Attach the FormClosing event
-            this.FormClosing += Close_Form;
-
-            // Display the Booking Time Frame
+            nameLabel.Text = currentBooking.Guest.FirstName + " " + currentBooking.Guest.LastName;
             timeFrameLabel.Text = FormatTimeFrame(currentBooking);
+            emailLabel.Text = currentBooking.Guest.Email;
             totalPriceLabel.Text = $"R{currentBooking.Total},00";
-            totalDepositPriceLabel.Text = $"R{currentBooking.Total * 0.1},00";
 
             // Initialize the ListView
             InitializeBookingSummaryListView();
@@ -32,7 +32,6 @@ namespace HotelBookingSystem.Presentation
             PopulateBookingSummary();
         }
 
-        // Method to format the time frame string
         private string FormatTimeFrame(Booking currentBooking)
         {
             // Format the CheckInDate and CheckOutDate to "dd MMM yyyy"
@@ -41,75 +40,6 @@ namespace HotelBookingSystem.Presentation
 
             // Return the formatted string
             return $"Time Frame: {checkIn} - {checkOut}";
-        }
-
-        private void Close_Form(object sender, FormClosingEventArgs e)
-        {
-            if (!backButtonPressed && this.Visible) Application.Exit();
-        }
-
-        private void backButton_Click(object sender, EventArgs e)
-        {
-            backButtonPressed = true;
-            this.Close();
-
-            // Create a copy of the currently open forms
-            Form[] openForms = Application.OpenForms.Cast<Form>().ToArray();
-
-            // Iterate over the copied array of open forms
-            foreach (Form form in openForms)
-            {
-                if (form is OTPForm)
-                {
-                    form.Close(); // Close the OTPForm if found
-                }
-                else if (form is RegisterNewCustomerForm)
-                {
-                    form.Close(); // Close the RegisterNewCustomerForm if found
-                }
-                else if (form is FindCustomerForm)
-                {
-                    form.Close(); // Close the FindCustomerForm if found
-                }
-                else if (form is MakeABookingForm)
-                {
-                    form.Show(); // Show the MakeABookingForm if found
-                }
-            }
-        }
-
-        private void homeButton_Click(object sender, EventArgs e)
-        {
-            backButtonPressed = true;
-            this.Close();
-
-            // Create a copy of the currently open forms
-            Form[] openForms = Application.OpenForms.Cast<Form>().ToArray();
-
-            // Iterate over the copied array of open forms
-            foreach (Form form in openForms)
-            {
-                if (form is OTPForm)
-                {
-                    form.Close(); // Close the OTPForm if found
-                }
-                else if (form is RegisterNewCustomerForm)
-                {
-                    form.Close(); // Close the RegisterNewCustomerForm if found
-                }
-                else if (form is FindCustomerForm)
-                {
-                    form.Close(); // Close the FindCustomerForm if found
-                }
-                else if (form is MakeABookingForm)
-                {
-                    form.Close(); // Close the MakeABookingForm if found
-                }
-                else if (form is HomeForm)
-                {
-                    form.Show(); // Show the HomeForm if found
-                }
-            }
         }
 
         // Initialize the columns in the ListView
@@ -163,12 +93,47 @@ namespace HotelBookingSystem.Presentation
             bookingSummaryListView.Refresh();
         }
 
-        private void proceedToPaymentButton_Click(object sender, EventArgs e)
+        private void returnToHomePageButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show($"Booking confirmation has been sent to the customer's email:{currentBooking.Guest.Email}", "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Hide(); // Hide the current form
-            BookingConfirmationForm bookingConfirmationForm = new BookingConfirmationForm(currentBooking);
-            bookingConfirmationForm.Show(); // Show the new BookingConfirmationForm
+            homeButton_Click(sender, e);
+        }
+
+        private void homeButton_Click(object sender, EventArgs e)
+        {
+            backButtonPressed = true;
+            this.Close();
+
+            // Create a copy of the currently open forms
+            Form[] openForms = Application.OpenForms.Cast<Form>().ToArray();
+
+            // Iterate over the copied array of open forms
+            foreach (Form form in openForms)
+            {
+                if (form is BookingSummaryForm)
+                {
+                    form.Close(); // Close the OTPForm if found
+                }
+                else if (form is OTPForm)
+                {
+                    form.Close(); // Close the OTPForm if found
+                }
+                else if (form is RegisterNewCustomerForm)
+                {
+                    form.Close(); // Close the RegisterNewCustomerForm if found
+                }
+                else if (form is FindCustomerForm)
+                {
+                    form.Close(); // Close the FindCustomerForm if found
+                }
+                else if (form is MakeABookingForm)
+                {
+                    form.Close(); // Close the MakeABookingForm if found
+                }
+                else if (form is HomeForm)
+                {
+                    form.Show(); // Show the HomeForm if found
+                }
+            }
         }
     }
 }
