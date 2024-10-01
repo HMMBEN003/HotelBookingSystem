@@ -80,12 +80,16 @@ namespace HotelBookingSystem.Presentation
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            bool userFound = guestController.FindByGuestEmail(emailTextBox.Text.Trim());
+            string email = emailTextBox.Text.Trim();
+            bool userFound = guestController.FindByGuestEmail(email);
 
             if (userFound)
             {
-                MessageBox.Show($"Email: {emailTextBox.Text.Trim()}\nSend OTP to email?", "Customer found", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-
+                MessageBox.Show($"Email: {email}\nSend OTP to email?", "Customer found", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                currentBooking.Guest = guestController.FindGuestByEmail(email);
+                this.Hide(); // Hide the current form
+                OTPForm otpForm = new OTPForm(currentBooking);
+                otpForm.Show(); // Show the new OTPForm
             }
             else
             {

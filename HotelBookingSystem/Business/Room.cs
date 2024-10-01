@@ -16,6 +16,7 @@ namespace HotelBookingSystem.Business
         private int adults;
         private int teens;
         private int infants;
+        private int totalPrice; // Total price of room over time frame
         #endregion
 
         #region Property methods
@@ -80,6 +81,13 @@ namespace HotelBookingSystem.Business
         {
             get { return infants; }
             set { infants = value; }
+        }
+
+        // Getter and Setter for TotalPrice
+        public int TotalPrice
+        {
+            get { return totalPrice; }
+            set { totalPrice = value; }
         }
         #endregion
 

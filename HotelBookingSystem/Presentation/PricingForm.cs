@@ -232,8 +232,11 @@ namespace HotelBookingSystem.Presentation
             // Clear existing items in the list view
             selectedRoomsListView.Items.Clear();
 
-            // Loop through the rooms in the booking and add them to the ListView
-            foreach (Room room in currentBooking.Rooms)
+            // Sort rooms by Room Number before populating
+            var sortedRooms = currentBooking.Rooms.OrderBy(room => room.RoomNumber).ToList();
+
+            // Loop through the sorted rooms and add them to the ListView
+            foreach (Room room in sortedRooms)
             {
                 // Create a new ListViewItem for the room
                 ListViewItem roomItem = new ListViewItem(room.RoomNumber);
@@ -254,6 +257,7 @@ namespace HotelBookingSystem.Presentation
             // Ensure the ListView is refreshed
             selectedRoomsListView.Refresh();
         }
+
 
         // Method to format the time frame string
         private string FormatTimeFrame(Booking currentBooking)
@@ -319,9 +323,17 @@ namespace HotelBookingSystem.Presentation
                 }
             }
 
-            this.Hide(); // Hide the current form
-            FindCustomerForm findCustomerForm = new FindCustomerForm(currentBooking);
-            findCustomerForm.Show(); // Show the new FindCustomerForm
+            if(!currentBooking.Guest.Verified)
+            {
+                this.Hide(); // Hide the current form
+                FindCustomerForm findCustomerForm = new FindCustomerForm(currentBooking);
+                findCustomerForm.Show(); // Show the new FindCustomerForm
+            } else {
+                this.Hide(); // Hide the current form
+                BookingSummaryForm bookingSummary = new BookingSummaryForm(currentBooking);
+                bookingSummary.Show(); // Show the new BookingSummaryForm
+            }
+            
         }
     }
 }

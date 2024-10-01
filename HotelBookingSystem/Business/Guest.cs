@@ -17,11 +17,12 @@ namespace HotelBookingSystem.Business
         private string _streetAddress;
         private string _suburb;
         private string _postalCode;
+        private bool _verified;
 
         // Constructor
         public Guest()
         {
-
+            _verified = false;
         }
 
         public Guest(int guestId, string firstName, string lastName, string email, string phone, string streetAddress, string suburb, string postalCode)
@@ -34,6 +35,7 @@ namespace HotelBookingSystem.Business
             _streetAddress = streetAddress;
             _suburb = suburb;
             _postalCode = postalCode;
+            _verified = false;
         }
 
         // Properties
@@ -83,6 +85,12 @@ namespace HotelBookingSystem.Business
         {
             get { return _postalCode; }
             set { _postalCode = value; }
+        }
+
+        public bool Verified
+        {
+            get { return _verified; }
+            set { _verified = value; }
         }
 
         // ToString method for a quick display of guest info

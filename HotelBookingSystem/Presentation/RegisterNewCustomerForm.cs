@@ -191,7 +191,9 @@ namespace HotelBookingSystem.Presentation
 
             if (result == DialogResult.OK) 
             {
-                
+                this.Hide(); // Hide the current form
+                OTPForm otpForm = new OTPForm(currentBooking);
+                otpForm.Show(); // Show the new OTPForm
             }
 
         }
