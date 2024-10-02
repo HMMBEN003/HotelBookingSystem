@@ -114,7 +114,7 @@ namespace HotelBookingSystem.Presentation
         // Validation methods
         private bool IsValidName(string name)
         {
-            return Regex.IsMatch(name, @"^[a-zA-Z]+$");
+            return Regex.IsMatch(name, @"^[\p{L}\s'-]+$");
         }
 
         private bool IsValidPhoneNumber(string phoneNumber)
@@ -180,12 +180,12 @@ namespace HotelBookingSystem.Presentation
 
         private void verifyButton_Click(object sender, EventArgs e)
         {
-            currentBooking.Guest.FirstName = firstNameTextBox.Text;
-            currentBooking.Guest.LastName = surnameTextBox.Text;
-            currentBooking.Guest.Phone = phoneNumberTextBox.Text;
-            currentBooking.Guest.StreetAddress = streetAddressTextBox.Text;
-            currentBooking.Guest.Suburb = suburbTextBox.Text;
-            currentBooking.Guest.PostalCode = postalCodeTextBox.Text;
+            currentBooking.Guest.FirstName = firstNameTextBox.Text.Trim();
+            currentBooking.Guest.LastName = surnameTextBox.Text.Trim();
+            currentBooking.Guest.Phone = phoneNumberTextBox.Text.Trim();
+            currentBooking.Guest.StreetAddress = streetAddressTextBox.Text.Trim();
+            currentBooking.Guest.Suburb = suburbTextBox.Text.Trim();
+            currentBooking.Guest.PostalCode = postalCodeTextBox.Text.Trim();
 
             DialogResult result = MessageBox.Show("Verify customer.\nSend OTP to email?", "Customer Verification", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 

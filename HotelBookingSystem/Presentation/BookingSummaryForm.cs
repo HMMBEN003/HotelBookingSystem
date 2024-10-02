@@ -167,12 +167,30 @@ namespace HotelBookingSystem.Presentation
 
         private void proceedToPaymentButton_Click(object sender, EventArgs e)
         {
-            //Console.WriteLine(currentBooking.ToString());
+            GuestController guestController = new GuestController();
+            bool existingCustomer = guestController.FindByGuestEmail(currentBooking.Guest.Email);
+
+            if (!existingCustomer)
+            {
+                // Add the new guest and ensure GuestId is updated
+                guestController.AddGuest(currentBooking.Guest);
+            }
+            else
+            {
+                // Retrieve the existing guest with GuestId and assign it to currentBooking.Guest
+                Guest existingGuest = guestController.FindGuestByEmail(currentBooking.Guest.Email);
+                currentBooking.Guest = existingGuest;
+            }
+
+            // Proceed with booking
             bookingController.ConfirmBooking(currentBooking);
+
+            // Display confirmation message
             DialogResult result = MessageBox.Show($"Booking confirmation has been sent to the customer's email: {currentBooking.Guest.Email}", "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Hide(); // Hide the current form
             BookingConfirmationForm bookingConfirmationForm = new BookingConfirmationForm(currentBooking);
             bookingConfirmationForm.Show(); // Show the new BookingConfirmationForm
         }
+
     }
 }

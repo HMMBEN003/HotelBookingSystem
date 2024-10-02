@@ -78,10 +78,10 @@ namespace HotelBookingSystem.Data
         // Fill the dataset with guest data and map the Guest object to a DataRow
         private void FillRow(DataRow aRow, Guest aGuest, DB.DBOperation operation)
         {
-            if (operation == DBOperation.Add)
+            /*if (operation == DBOperation.Add)
             {
                 aRow["guest_id"] = aGuest.GuestId;  // Auto-assigned Guest ID
-            }
+            }*/
             aRow["first_name"] = aGuest.FirstName; // Assign first name
             aRow["last_name"] = aGuest.LastName;   // Assign last name
             aRow["email"] = aGuest.Email;          // Assign email
@@ -132,13 +132,58 @@ namespace HotelBookingSystem.Data
         }
 
         // Method to add a new guest
+        // GuestDB.cs
+
         public void AddGuest(Guest guest)
         {
-            DataRow newRow = dsMain.Tables[table].NewRow(); // Create a new row
-            FillRow(newRow, guest, DBOperation.Add); // Fill the new row with guest data
-            dsMain.Tables[table].Rows.Add(newRow); // Add the row to the dataset
-            UpdateDataSource(guest); // Update the database with the new guest
+            try
+            {
+                // Build the INSERT command
+                SqlCommand cmd = new SqlCommand(
+                    "INSERT INTO Guest (first_name, last_name, email, phone, street_address, suburb, postal_code) " +
+                    "OUTPUT INSERTED.guest_id " +
+                    "VALUES (@FirstName, @LastName, @Email, @Phone, @StreetAddress, @Suburb, @PostalCode)", cnMain);
+
+                // Add parameters
+                cmd.Parameters.AddWithValue("@FirstName", guest.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", guest.LastName);
+                cmd.Parameters.AddWithValue("@Email", guest.Email);
+                cmd.Parameters.AddWithValue("@Phone", guest.Phone);
+                cmd.Parameters.AddWithValue("@StreetAddress", guest.StreetAddress);
+                cmd.Parameters.AddWithValue("@Suburb", guest.Suburb);
+                cmd.Parameters.AddWithValue("@PostalCode", guest.PostalCode);
+
+                if (cnMain.State == ConnectionState.Closed)
+                {
+                    cnMain.Open();
+                }
+
+                // Execute the command and retrieve the new guest_id
+                var result = cmd.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    int guestId = Convert.ToInt32(result);
+                    guest.GuestId = guestId; // Assign the new guest_id to the guest object
+                }
+                else
+                {
+                    throw new Exception("Failed to retrieve the inserted guest ID.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error in AddGuest: " + ex.Message, ex);
+            }
+            finally
+            {
+                if (cnMain.State == ConnectionState.Open)
+                {
+                    cnMain.Close();
+                }
+            }
         }
+
 
         // Method to edit an existing guest
         public void EditGuest(Guest guest)

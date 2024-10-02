@@ -94,7 +94,7 @@ namespace HotelBookingSystem.Presentation
 
         private void verifyButton_Click(object sender, EventArgs e)
         {
-            if(OTPtextBox.Text == "1234")
+            if(OTPtextBox.Text.Trim() == "1234")
             {
                 currentBooking.Guest.Verified = true;
                 MessageBox.Show($"The OTP has been verified", "OTP Verified", MessageBoxButtons.OK, MessageBoxIcon.Information);

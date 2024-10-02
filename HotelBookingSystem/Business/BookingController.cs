@@ -119,7 +119,7 @@ namespace HotelBookingSystem.Business
         // Method to confirm and save the booking
         public void ConfirmBooking(Booking booking)
         {
-            if (booking.Guest == null || booking.Guest.GuestId <= 0)
+            if (booking.Guest == null || booking.Guest.GuestId < 0)
             {
                 throw new Exception("Invalid Guest ID: The guest does not exist.");
             }
