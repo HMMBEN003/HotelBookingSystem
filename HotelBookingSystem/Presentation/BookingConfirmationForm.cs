@@ -14,6 +14,8 @@ namespace HotelBookingSystem.Presentation
     public partial class BookingConfirmationForm : Form
     {
         private Booking currentBooking;
+        private bool backButtonPressed = false;
+
         public BookingConfirmationForm(Booking currentBooking)
         {
             InitializeComponent();
@@ -36,7 +38,7 @@ namespace HotelBookingSystem.Presentation
 
         private void Close_Form(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            if(!backButtonPressed) Application.Exit();
         }
 
         private string FormatTimeFrame(Booking currentBooking)
@@ -107,6 +109,7 @@ namespace HotelBookingSystem.Presentation
 
         private void homeButton_Click(object sender, EventArgs e)
         {
+            backButtonPressed = true;
             this.Close();
 
             // Create a copy of the currently open forms

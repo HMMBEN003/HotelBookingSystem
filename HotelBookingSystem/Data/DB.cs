@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using HotelBookingSystem.Properties;//***needs to be added to be able to use the Settings property
+using HotelBookingSystem.Properties;
 
 namespace HotelBookingSystem.Data
 {
@@ -71,31 +71,35 @@ namespace HotelBookingSystem.Data
         #endregion
 
         #region Update the data source 
-        protected bool UpdateDataSource(string sqlLocal, string table)
+        public bool UpdateDataSource(string sqlLocal, string table)
         {
-            bool success;
+            bool success = true;
             try
             {
-                //open the connection
-                cnMain.Open();
-                //***update the database table via the data adapter
+                // Open the connection
+                if (cnMain.State == ConnectionState.Closed)
+                    cnMain.Open();
+
+                // Update the database via the DataAdapter
                 daMain.Update(dsMain, table);
-                //---close the connection
-                cnMain.Close();
-                //refresh the dataset
-                FillDataSet(sqlLocal, table);
-                success = true;
             }
             catch (Exception errObj)
             {
-                MessageBox.Show(errObj.Message + "  " + errObj.StackTrace);
+                System.Windows.Forms.MessageBox.Show(errObj.Message + "  " + errObj.StackTrace);
                 success = false;
             }
             finally
             {
+                // Ensure the connection is closed
+                if (cnMain.State == ConnectionState.Open)
+                    cnMain.Close();
             }
+
+            FillDataSet(sqlLocal, table);
             return success;
+
+            #endregion
         }
-        #endregion
+
     }
 }

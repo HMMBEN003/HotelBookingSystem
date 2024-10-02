@@ -66,5 +66,12 @@ namespace HotelBookingSystem.Presentation
                 }
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide(); // Hide the current form
+            TestForm testForm = new TestForm();
+            testForm.Show(); // Show the new MakeABookingForm
+        }
     }
 }

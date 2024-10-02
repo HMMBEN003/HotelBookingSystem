@@ -80,6 +80,35 @@ namespace HotelBookingSystem.Data
             }
         }
 
+        public void UpdateRoomOccupants(int roomId, int adults, int teens, int infants)
+        {
+            string sql = "UPDATE Room SET adults = @adults, teens = @teens, infants = @infants WHERE room_id = @room_id";
+
+            try
+            {
+                if (cnMain.State == ConnectionState.Closed)
+                {
+                    cnMain.Open(); // Open the connection
+                }
+
+                SqlCommand cmd = new SqlCommand(sql, cnMain);
+                cmd.Parameters.AddWithValue("@room_id", roomId);
+                cmd.Parameters.AddWithValue("@adults", adults);
+                cmd.Parameters.AddWithValue("@teens", teens);
+                cmd.Parameters.AddWithValue("@infants", infants);
+
+                cmd.ExecuteNonQuery(); // Execute the query
+            }
+            finally
+            {
+                if (cnMain.State == ConnectionState.Open)
+                {
+                    cnMain.Close(); // Ensure connection is closed
+                }
+            }
+        }
+
+
         // Fill the dataset with room data and map the Room object to a DataRow
         private void FillRow(DataRow aRow, Room aRoom, DB.DBOperation operation)
         {

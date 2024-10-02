@@ -62,16 +62,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\Booking.cs" />
+    <Compile Include="Business\BookingController.cs" />
     <Compile Include="Business\Guest.cs" />
     <Compile Include="Business\GuestController.cs" />
     <Compile Include="Business\LoginController.cs" />
     <Compile Include="Business\Occupants.cs" />
     <Compile Include="Business\Room.cs" />
     <Compile Include="Business\RoomController.cs" />
+    <Compile Include="Business\TestClass.cs" />
+    <Compile Include="Business\TestController.cs" />
+    <Compile Include="Data\BookingDB.cs" />
     <Compile Include="Data\DB.cs" />
     <Compile Include="Data\GuestDB.cs" />
     <Compile Include="Data\LoginDB.cs" />
     <Compile Include="Data\RoomDB.cs" />
+    <Compile Include="Data\TestDB.cs" />
     <Compile Include="Presentation\BookingConfirmationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +136,12 @@
     <Compile Include="Presentation\RegisterNewCustomerForm.Designer.cs">
       <DependentUpon>RegisterNewCustomerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Presentation\BookingConfirmationForm.resx">
@@ -159,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\RegisterNewCustomerForm.resx">
       <DependentUpon>RegisterNewCustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

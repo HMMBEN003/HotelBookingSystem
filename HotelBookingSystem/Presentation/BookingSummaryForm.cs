@@ -11,11 +11,13 @@ namespace HotelBookingSystem.Presentation
     {
         private bool backButtonPressed = false;
         private Booking currentBooking;
+        private BookingController bookingController;
 
         public BookingSummaryForm(Booking currentBooking)
         {
             InitializeComponent();
             this.currentBooking = currentBooking;
+            this.bookingController = new BookingController();
 
             // Attach the FormClosing event
             this.FormClosing += Close_Form;
@@ -165,7 +167,9 @@ namespace HotelBookingSystem.Presentation
 
         private void proceedToPaymentButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show($"Booking confirmation has been sent to the customer's email:{currentBooking.Guest.Email}", "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //Console.WriteLine(currentBooking.ToString());
+            bookingController.ConfirmBooking(currentBooking);
+            DialogResult result = MessageBox.Show($"Booking confirmation has been sent to the customer's email: {currentBooking.Guest.Email}", "Payment Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Hide(); // Hide the current form
             BookingConfirmationForm bookingConfirmationForm = new BookingConfirmationForm(currentBooking);
             bookingConfirmationForm.Show(); // Show the new BookingConfirmationForm
