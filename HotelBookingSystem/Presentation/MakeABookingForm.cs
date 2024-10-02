@@ -49,7 +49,7 @@ namespace HotelBookingSystem.Presentation
             currentBooking.CheckInDate = checkInDateTimePicker.Value;
             currentBooking.CheckOutDate = checkOutDateTimePicker.Value;
 
-            roomController = new RoomController();
+            roomController = new RoomController(currentBooking.CheckInDate, currentBooking.CheckOutDate);
 
             // Initialize ListView event handlers for item movement
             availableRoomsListView.ItemSelectionChanged += availableRoomsListView_ItemSelectionChanged;
@@ -271,6 +271,9 @@ namespace HotelBookingSystem.Presentation
             // Clear the selectedRoomsListView items (but keep column headers)
             selectedRoomsListView.Items.Clear();
 
+            // Refresh available Rooms
+            roomController.RefreshAvailableRooms(currentBooking.CheckInDate, currentBooking.CheckOutDate);
+
             // Re-populate the available rooms list
             setUpRoomListView();
         }
@@ -330,6 +333,10 @@ namespace HotelBookingSystem.Presentation
             else
             {
                 invalidTimeFrameLabel.Visible = false;
+
+                // Refresh available Rooms
+                roomController.GetAvailableRooms(currentBooking.CheckInDate, currentBooking.CheckOutDate);
+
                 searchForRooms();
             }
 

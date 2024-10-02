@@ -36,6 +36,11 @@ namespace HotelBookingSystem.Data
             FillDataSet(sqlLocal, table); // Fill the dataset with room data from the database
             Add2Collection(table); // Convert dataset rows into Room objects
         }
+
+        public RoomDB(DateTime checkInTime, DateTime checkOutTime) : base()
+        {
+            rooms = GetAvailableRooms(checkInTime, checkOutTime);
+        }
         #endregion
 
         #region Utility Methods
@@ -152,45 +157,108 @@ namespace HotelBookingSystem.Data
             return returnValue; // Return the index of the found room, or -1 if not found
         }
 
-        // Method to get room features for a specific room
+        #region GetRoomFeatures Method
+
+        // Method to get room features for a given room ID
         private List<string> GetRoomFeatures(int roomId)
         {
             List<string> features = new List<string>();
 
-            string sql = $"SELECT feature_name FROM {roomFeaturesTable} WHERE room_id = @room_id";
-
-            // Use a try-finally block to ensure the connection is closed even if an exception occurs
             try
             {
-                // Open the connection if it's not already open
-                if (cnMain.State == ConnectionState.Closed)
+                string sql = @"
+            SELECT feature_name
+            FROM RoomFeatures
+            WHERE room_id = @roomId";
+
+                using (SqlConnection conn = new SqlConnection(cnMain.ConnectionString))
                 {
-                    cnMain.Open();
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@roomId", roomId);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string featureName = reader["feature_name"].ToString();
+                                features.Add(featureName);
+                            }
+                        }
+                    }
                 }
-
-                SqlCommand cmd = new SqlCommand(sql, cnMain);
-                cmd.Parameters.AddWithValue("@room_id", roomId);
-
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    features.Add(reader["feature_name"].ToString().TrimEnd());
-                }
-
-                reader.Close();
             }
-            finally
+            catch (Exception ex)
             {
-                // Ensure that the connection is closed after executing the query
-                if (cnMain.State == ConnectionState.Open)
-                {
-                    cnMain.Close();
-                }
+                throw new Exception("Error in GetRoomFeatures: " + ex.Message, ex);
             }
 
             return features;
         }
+
+
+        #endregion
+
+        #region GetAvailableRooms Method
+
+        // Method to get available rooms for a given date range
+        public Collection<Room> GetAvailableRooms(DateTime checkInDate, DateTime checkOutDate)
+        {
+            Collection<Room> availableRooms = new Collection<Room>();
+
+            try
+            {
+                string sql = @"
+                    SELECT * FROM Room WHERE room_id NOT IN (
+                        SELECT DISTINCT br.room_id
+                        FROM Booking_Rooms br
+                        INNER JOIN Booking b ON br.booking_id = b.booking_id
+                        WHERE b.check_in_date < @checkOutDate AND b.check_out_date > @checkInDate
+                    )";
+
+                using (SqlCommand cmd = new SqlCommand(sql, cnMain))
+                {
+                    cmd.Parameters.AddWithValue("@checkInDate", checkInDate);
+                    cmd.Parameters.AddWithValue("@checkOutDate", checkOutDate);
+
+                    if (cnMain.State == ConnectionState.Closed)
+                    {
+                        cnMain.Open();
+                    }
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Room room = new Room(
+                                Convert.ToInt32(reader["room_id"]),
+                                Convert.ToString(reader["room_number"]).TrimEnd(),
+                                GetRoomFeatures(Convert.ToInt32(reader["room_id"])),  // Pass the list of features here
+                                Convert.ToDecimal(reader["low_season_price"]),
+                                Convert.ToDecimal(reader["mid_season_price"]),
+                                Convert.ToDecimal(reader["high_season_price"]),
+                                Convert.ToInt32(reader["adults"]),
+                                Convert.ToInt32(reader["teens"]),
+                                Convert.ToInt32(reader["infants"])
+                            );
+                            availableRooms.Add(room);
+                        }
+                    }
+
+                    cnMain.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error in GetAvailableRooms: " + ex.Message, ex);
+            }
+
+            return availableRooms;
+        }
+
+        #endregion
         #endregion
 
         #region Database Operations CRUD

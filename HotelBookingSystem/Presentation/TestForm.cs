@@ -12,21 +12,21 @@ namespace HotelBookingSystem.Presentation
 {
     public partial class TestForm : Form
     {
-        private Collection<TestClass> tests;
-        private TestController testController;
+        private Collection<Booking> bookings;
+        private BookingController bookingController;
 
         public TestForm()
         {
             InitializeComponent();
-            testController = new TestController();
-            LoadTests();  // Load data from database
+            bookingController = new BookingController();
             SetUpListView();  // Set up ListView columns and layout
+            LoadBookings();  // Load data from database
         }
 
-        // Method to load tests from the database
-        private void LoadTests()
+        // Method to load bookings from the database
+        private void LoadBookings()
         {
-            tests = testController.tests;
+            bookings = bookingController.AllBookings;
             PopulateListView();
         }
 
@@ -43,16 +43,16 @@ namespace HotelBookingSystem.Presentation
         }
 
 
-        // Method to populate ListView with data from tests
+        // Method to populate ListView with data from bookings
         private void PopulateListView()
         {
             bookingsListView.Items.Clear();  // Clear any existing items
-            if (tests != null && tests.Count > 0)
+            if (bookings != null && bookings.Count > 0)
             {
-                foreach (var test in tests)
+                foreach (Booking booking in bookings)
                 {
-                    var item = new ListViewItem(test.Id.ToString());  // Add ID as the first column
-                    item.SubItems.Add(test.Name);  // Add Name as the second column
+                    var item = new ListViewItem(booking.ID.ToString());  // Add ID as the first column
+                    item.SubItems.Add(booking.Guest.Email);  // Add Name as the second column
                     bookingsListView.Items.Add(item);  // Add the ListViewItem to the ListView
                 }
             }
@@ -61,33 +61,6 @@ namespace HotelBookingSystem.Presentation
                 MessageBox.Show("No records to display.");
             }
             bookingsListView.Refresh();  // Refresh the ListView after updating
-        }
-
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            // Create a dummy TestClass object
-            var dummyTest = new TestClass
-            {
-                Id = GetNewId(), // You need a method to get a unique ID
-                Name = "Dummy Test"
-            };
-
-            // Add the dummy test to the database via the TestController
-            testController.AddTestRecord(dummyTest);
-
-            // Reload the data from the database to ensure persistence and update the ListView
-            tests = testController.testDB.GetAllTests();
-            PopulateListView();  // Repopulate the ListView with the new data
-        }
-
-
-        // Method to generate a new unique ID
-        // Method to generate a new unique ID by fetching the highest ID from the database
-        private int GetNewId()
-        {
-            // Ensure you're using the database to determine the next available ID
-            int highestId = testController.GetHighestIdFromDB();  // This will return the highest ID from the database
-            return highestId + 1;  // Increment the highest ID to get a new unique ID
         }
 
         private void label2_Click(object sender, EventArgs e)

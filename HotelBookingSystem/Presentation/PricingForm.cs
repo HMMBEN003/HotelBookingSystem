@@ -43,6 +43,8 @@ namespace HotelBookingSystem.Presentation
             // Attach the ItemSelectionChanged event for selectedRoomsListView
             selectedRoomsListView.ItemSelectionChanged += SelectedRoomsListView_ItemSelectionChanged;
 
+            currentBooking.Total = 0;
+
             foreach (Room room in currentBooking.Rooms)
             {
                 room.Adults = room.Adults == 0 ? 1: room.Adults;

@@ -34,7 +34,23 @@ namespace HotelBookingSystem.Business
             roomDB = new RoomDB();  // Communicates with the database
             rooms = roomDB.AllRooms; // Populate rooms from the database
         }
+
+        public RoomController(DateTime checkInDate, DateTime checkOutTime)
+        {
+            roomDB = new RoomDB(checkInDate, checkOutTime);  // Communicates with the database
+            rooms = roomDB.AllRooms; // Populate rooms from the database
+        }
         #endregion
+
+        public Collection<Room> GetAvailableRooms(DateTime checkInDate, DateTime checkOutDate)
+        {
+            return roomDB.GetAvailableRooms(checkInDate, checkOutDate);
+        }
+
+        public void RefreshAvailableRooms(DateTime checkInDate, DateTime checkOutDate)
+        {
+            rooms = roomDB.GetAvailableRooms(checkInDate, checkOutDate);
+        }
 
         #region Database Communication
         // This method is responsible for performing CRUD operations (Add, Edit, Delete) on rooms
@@ -134,5 +150,7 @@ namespace HotelBookingSystem.Business
             return matches; // Return all rooms that match the feature
         }
         #endregion
+
+
     }
 }

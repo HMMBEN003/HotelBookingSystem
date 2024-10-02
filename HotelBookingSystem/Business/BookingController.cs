@@ -26,7 +26,6 @@ namespace HotelBookingSystem.Business
         {
             bookingDB = new BookingDB(); // Initialise the DB object
             bookings = bookingDB.AllBookings; // Populate bookings from the database
-            Console.WriteLine(bookings.Count);
         }
         #endregion
 

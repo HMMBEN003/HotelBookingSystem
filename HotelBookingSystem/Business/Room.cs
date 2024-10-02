@@ -101,6 +101,14 @@ namespace HotelBookingSystem.Business
 
         #region Constructor
         // Constructor to initialize the Room with seasonal prices
+        /*public Room(int id, string number, List<string> features, decimal lowPrice)
+        {
+            roomId = id;
+            roomNumber = number;
+            roomFeatures = features;
+            lowSeasonPrice = lowPrice;
+        }*/
+
         public Room(int id, string number, List<string> features, decimal lowPrice, decimal midPrice, decimal highPrice, int adults, int teens, int infants)
         {
             roomId = id;

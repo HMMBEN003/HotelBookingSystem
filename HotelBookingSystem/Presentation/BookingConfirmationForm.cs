@@ -28,6 +28,7 @@ namespace HotelBookingSystem.Presentation
             timeFrameLabel.Text = FormatTimeFrame(currentBooking);
             emailLabel.Text = currentBooking.Guest.Email;
             totalPriceLabel.Text = $"R{currentBooking.Total},00";
+            referenceNumberLabel.Text = $"PK{currentBooking.ID}";
 
             // Initialize the ListView
             InitializeBookingSummaryListView();
@@ -48,7 +49,7 @@ namespace HotelBookingSystem.Presentation
             string checkOut = currentBooking.CheckOutDate.ToString("d MMM yyyy");
 
             // Return the formatted string
-            return $"Time Frame: {checkIn} - {checkOut}";
+            return $"{checkIn} - {checkOut}";
         }
 
         // Initialize the columns in the ListView
